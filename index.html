@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROJECT-6</title>
+    <link rel="stylesheet" href="CSS/style.css">
+</head>
+<body>
+    <div id="container">
+        <!-- <textarea class="sticky"></textarea>
+        <textarea class="sticky"></textarea>
+        <textarea class="sticky"></textarea>
+        <textarea class="sticky"></textarea>
+        <textarea class="sticky"></textarea> -->
+
+        <button class="btn-Add">Add Notes</button>
+    </div>
+
+
+    <script src="JS/script.js"></script>
+</body>
+</html>
+
+
+
+<!-- 
+
+function getAppStorage(){
+    return JSON.parse(localStorage.getItem('sticky') || "[]");
+}     This function returns the JSON data , we should parse and use localStorage.getItem to get the JSON data by its key(sticky) or  if no data are exists it can give empty so we mention "[]"
+
+parse : parse means it convert string or object or number to JS grammar, It cannot consider string or number or object.
+
+ display:grid;
+ grid-template-columns: repeat(auto-fill,230px);   here , In this particular line  , adjust the width as 230px automaticlly . automatically fill the pixels, If the space is not enough it will automatically come down of the particular block.
+
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+                    The above box-shadow line is copy from box-shadow website.
+
+
+    function getAppStorage(){
+    return JSON.parse(localStorage.getItem('sticky') || "[]");
+            - The above is the function ,when getAppStorage() function call ,  getAppStorage() function will return JSON as parse(array form) from localStorage , using getItem() function to get the KEY('sticky') of objects(key , value)  or  If it is not exists it will Empty so we use "[]";
+}
+
+const containerElement=document.getElementById("container");   here the id_name "container" is stored in the variable containerElement by using the function getElementById()
+
+const btnAdd =  document.getElementsByClassName("btn-Add")[0];  here the class_name "btn-Add" is stored in the variable btnAdd by using getElementsByClassName() , the [0] represent the first index value because we can use only one button.
+
+
+getAppStorage().forEach(element => {
+   const textElement= createTextElement(element.id,element.content);
+   containerElement.insertBefore(textElement,btnAdd);
+   });     
+            -here we use forEach method to store the values to the variable as one by one manner . 
+            -the datas are stored in the getAppStorage() function , so we can use forEach() for this function and store the values in element.
+            -now , all the values will store in the element as one by one.
+            
+            -If we want to call the id of element we sould use element.id as same as content , so we can use element.id ,element.content.
+            -here the container is stored in the variable containerElement , so we can access the containerElement.
+            -containerElement.insertBefore(textElement,btnAdd);  This line is represents to insert the textElement before the button , so we can use insertBefore().
+            -textElement refers to id and content of element , which is created by createTextElement() function.
+
+
+   function createTextElement(id,content){
+   const textElement = document.createElement('textarea');
+   textElement.classList.add('sticky');
+   textElement.value=content;
+   textElement.placeholder="Enter Your Notes"
+
+   textElement.addEventListener('change',()=>{
+    updateNotes(id,textElement.value)
+   });
+       -  The above is the function we can add the id and content as parameter.
+
+      const textElement = document.createElement('textarea');     ->   textElement is the variable , we can create the new 'textarea' by using createElement('textarea') function and store it into the textElement variable.
+
+      -   textElement.classList.add('sticky');        ->   Here textElement is a variable which is consist of textarea, we can add classList 'sticky' , so the style .sticky is apply to textarea as dynamic manner.    
+
+      -      textElement.value=content;   here , we specify the value of textElement is content ,  not an id.
+
+        -textElement.placeholder="Enter Your Notes"  This line is for just Interaction with user , it is not mandatory.
+
+
+   textElement.addEventListener('change',()=>{
+    updateNotes(id, textElement.value)
+   });
+
+   -here we use Event listener for textElement and the Event is 'change' , for change we can use arrow function or anonymys function , In this function block the updateNotes() function will work , In this function we can add the parameters that is id and value of textElement (textelement.value).
+
+
+  textElement.addEventListener('dblclick',()=>{
+    const check=confirm("Are You Sure to Delete ?");
+    console.log(check);
+    if(check==true){
+        deleteNotes(id,textElement)
+    };
+   });
+
+   return textElement;
+}
+
+-here , we use event listener for textElement , the event is double click 'dblclick' , when we double click the textarea the anonymys function will work, in this function one confirm box will show that is "Are You Sure to Delete ?" , if the user click yes it will take as true , so true means the function deleteNotes will call otherwise not call.
+- In deleteNotes(id , textElement) , the id and its textElement are include.
+-return textElement;  this means we returning the textarea , so the textElement will delete depends on the logic of the function deleteNotes() that is given below.
+
+
+function deleteNotes(id,textElement){
+    const previousNotes=getAppStorage().filter((note)=>note.id!=id);
+    saveNotes(previousNotes);
+    containerElement.removeChild(textElement);
+}
+    -Here in this function ,  we can store the function getAppStorage() with filter by using the logic  that is ,  filter((note)=>note.id!=id); 
+    -saveNotes(previousNotes); here we call the function saveNotes and pass the previousNotes as parameter.
+    -containerElement.removeChild(textElement); In this line will delete the textarea in containerElement.
+
+    //Add New sticky notes
+
+  function addSticky(){
+    const previousNotes = getAppStorage();
+    const newNotes = {
+        id:Math.floor(Math.random()*100000),
+        content:""
+        
+    } 
+        - In this function addSticky() we can first store the getAppStorage() function into the variable previousNotes , because the previously taken notes are not erased.
+        -const newNotes   -> declare new variable name as newNotes and store the values as object(json) that is id and content.
+        - content:""  ->which means content is empty 
+        - id:Math.floor(Math.random()*100000), -> which means id is a 5 digit random numbers , so we should use this logic.
+        logic->random()*100000
+        Math is a function and random() is also a function.
+
+const textElement=   createTextElement(newNotes.id,newNotes.content);
+ containerElement.insertBefore(textElement,btnAdd);
+ previousNotes.push(newNotes);
+ saveNotes(previousNotes);
+
+ - here we can create the new element by using the function "createTextElement" that is newnotes.id and newNotes.content.
+ -As usual we insert the textarea before the button.
+ -previousNotes.push(newNotes);  -> push the new notes into previous notes , This plays an role as update notes.
+- saveNotes(previousNotes);   -> and save the previous notes only because we have assign the new notes to the variable previous notes. so we can save only previous notes by call the saveNotes() function.
+ 
+btnAdd.addEventListener('click',()=>addSticky());
+  -In this above line is for add the new notes in browser ,  we have give Event Listener for button(btnAdd) and the Event is 'click' and also we can use the arrow function , The arrow is refers to the another function called addSticky().
+  -so , when the user click the button the arrow function call the another function that is addSticky()
+  -The logics and the coding of the addSticky() function was already given in the above. 
+
+//JSON format content :  [{"id":14575,"content":"This  is content 1"},{"id":16775,"content":"This is content 2"},{ "id":62539,"content":"This is content 3"},{"id":42527,"content":"This is content 4"},{ "id":625230, "content":"This is content 5"}]
+  - This is the JSON format datas for give the data to textarea as  manually in the Local Storage.
+-->
